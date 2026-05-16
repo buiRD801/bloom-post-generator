@@ -175,22 +175,33 @@ function Logo({ size=84, white=false }) {
 
 function T_WatercolorQuote({ lines=["Presence 臨在狀態","不是一種技術，","它是一種內在狀態。"], sparkle=true, pal="cool" }) {
   const p = PALS[pal]||PALS.cool;
+  // 每行高度 = fontSize(64) × lineHeight(1.55) = 99px
+  // N行總高 = N × 99px
+  // 閃星高度(含margin) = 70 + 20 = 90px
+  // 文字群組總高 = (sparkle ? 90 : 0) + lines.length × 99
+  // 置中起點 = 520 - 總高/2
+  const lineH = 64 * 1.55;
+  const sparkleH = sparkle ? 90 : 0;
+  const totalH = sparkleH + lines.length * lineH;
+  const logoBottom = 80 + 130 + 40; // logo top(80) + logo height(130) + gap(40) = 250
+  const imageBottom = 1040;
+  const centerY = logoBottom + (imageBottom - logoBottom) / 2;
+  const topPos = Math.round(centerY - totalH / 2);
   return (
     <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",top:-90,left:-90}}><WCCluster palette={p.tl} size={360} seed={11}/></div>
       <div style={{position:"absolute",top:-110,right:-120}}><WCCluster palette={p.tr} size={420} seed={14}/></div>
       <div style={{position:"absolute",bottom:-120,left:-130}}><WCCluster palette={p.bl} size={400} seed={17}/></div>
       <div style={{position:"absolute",bottom:-110,right:-130}}><WCCluster palette={p.br} size={430} seed={20}/></div>
-      {/* Logo absolute，不參與 flex 排版 */}
+      {/* Logo 固定上方 */}
       <div style={{position:"absolute",top:80,left:"50%",transform:"translateX(-50%)",zIndex:2}}>
         <Logo size={130}/>
       </div>
-      {/* 文字在整張圖 1040px 的幾何正中央 */}
+      {/* 文字群組：精確計算置中位置 */}
       <div style={{
         position:"absolute",
-        top:"50%",
+        top:topPos,
         left:0,right:0,
-        transform:"translateY(-50%)",
         display:"flex",
         flexDirection:"column",
         alignItems:"center",
