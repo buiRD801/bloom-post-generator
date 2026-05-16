@@ -466,6 +466,8 @@ export default function App() {
         display:"grid",
         gridTemplateColumns:"300px 1fr",
         minHeight:0,
+        height:"calc(100vh - 78px)",
+        overflow:"hidden",
       }}>
         {/* LEFT PANEL */}
         <div style={{
@@ -473,6 +475,7 @@ export default function App() {
           borderRight:"1px solid rgba(0,0,0,0.07)",
           padding:"20px 18px",
           overflowY:"auto",
+          height:"100%",
           display:"flex",
           flexDirection:"column",
           gap:18,
