@@ -522,6 +522,26 @@ export default function App() {
                 <code style={{background:"#F0EDE8",padding:"1px 4px",borderRadius:3,fontFamily:"monospace"}}>／／</code>
                 {" "}分段（宣言體）
               </div>
+              {/* 垂直位置滑桿 */}
+              <div style={{marginTop:14}}>
+                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
+                  <span style={{fontSize:10,fontWeight:700,letterSpacing:"0.18em",color:T.inkSoft,textTransform:"uppercase"}}>文字垂直位置</span>
+                  <span style={{fontSize:12,color:T.teal700,fontFamily:"monospace",fontWeight:700}}>
+                    {verticalOffset > 0 ? `+${verticalOffset}` : verticalOffset}px
+                  </span>
+                </div>
+                <input type="range" min={-200} max={200} value={verticalOffset}
+                  onChange={e => setVerticalOffset(Number(e.target.value))}
+                  style={{width:"100%",cursor:"pointer",accentColor:T.teal700}}/>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:T.inkSoft,marginTop:4}}>
+                  <span>↑ 往上</span>
+                  <button onClick={()=>setVerticalOffset(0)}
+                    style={{fontSize:10,border:"none",background:"#F0EDE8",borderRadius:4,padding:"2px 8px",cursor:"pointer",fontFamily:"inherit"}}>
+                    重置
+                  </button>
+                  <span>往下 ↓</span>
+                </div>
+              </div>
             </div>
           )}
 
@@ -583,29 +603,6 @@ export default function App() {
                   width:18,height:18,borderRadius:"50%",background:"white",transition:"left .2s",
                 }}/>
               </button>
-            </div>
-          )}
-
-          {/* 垂直位置調整 */}
-          {!tpl.isEvent && (
-            <div>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
-                <span style={labelStyle}>文字垂直位置</span>
-                <span style={{fontSize:12,color:T.teal700,fontFamily:"monospace",fontWeight:700}}>
-                  {verticalOffset > 0 ? `+${verticalOffset}` : verticalOffset}px
-                </span>
-              </div>
-              <input type="range" min={-200} max={200} value={verticalOffset}
-                onChange={e => setVerticalOffset(Number(e.target.value))}
-                style={{width:"100%",cursor:"pointer",accentColor:T.teal700}}/>
-              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:T.inkSoft,marginTop:4}}>
-                <span>↑ 往上</span>
-                <button onClick={()=>setVerticalOffset(0)}
-                  style={{fontSize:10,border:"none",background:"#F0EDE8",borderRadius:4,padding:"2px 8px",cursor:"pointer",fontFamily:"inherit"}}>
-                  重置
-                </button>
-                <span>往下 ↓</span>
-              </div>
             </div>
           )}
 
