@@ -173,20 +173,15 @@ function Logo({ size=84, white=false }) {
 
 // ─── Templates ────────────────────────────────────────────────────────────────
 
-function T_WatercolorQuote({ lines=["Presence 臨在狀態","不是一種技術，","它是一種內在狀態。"], sparkle=true, pal="cool" }) {
+function T_WatercolorQuote({ lines=["Presence 臨在狀態","不是一種技術，","它是一種內在狀態。"], sparkle=true, pal="cool", verticalOffset=0 }) {
   const p = PALS[pal]||PALS.cool;
-  // 每行高度 = fontSize(64) × lineHeight(1.55) = 99px
-  // N行總高 = N × 99px
-  // 閃星高度(含margin) = 70 + 20 = 90px
-  // 文字群組總高 = (sparkle ? 90 : 0) + lines.length × 99
-  // 置中起點 = 520 - 總高/2
   const lineH = 64 * 1.55;
   const sparkleH = sparkle ? 90 : 0;
   const totalH = sparkleH + lines.length * lineH;
-  const logoBottom = 80 + 130 + 40; // logo top(80) + logo height(130) + gap(40) = 250
+  const logoBottom = 80 + 130 + 40;
   const imageBottom = 1040;
   const centerY = logoBottom + (imageBottom - logoBottom) / 2;
-  const topPos = Math.round(centerY - totalH / 2);
+  const topPos = Math.round(centerY - totalH / 2) + verticalOffset;
   return (
     <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",top:-90,left:-90}}><WCCluster palette={p.tl} size={360} seed={11}/></div>
@@ -360,6 +355,7 @@ export default function App() {
   const [pal, setPal] = useState("cool");
   const [photo, setPhoto] = useState(null);
   const [sparkle, setSparkle] = useState(true);
+  const [verticalOffset, setVerticalOffset] = useState(0);
   const [eventTitle, setEventTitle] = useState("教練倫理守則與規範");
   const [kicker, setKicker] = useState("教練公益課程");
   const [dateDay, setDateDay] = useState("08");
@@ -378,9 +374,9 @@ export default function App() {
     if (tpl.isEvent)      return { title:eventTitle, kicker, dateDay, dateMonth };
     if (tpl.id === "photo-quote") return { lines, photo };
     if (tpl.id === "hero-photo")  return { lines, photo };
-    if (tpl.id === "manifesto")   return { paragraphs };
-    if (tpl.hasPal)       return { lines, pal, sparkle };
-    return { lines };
+    if (tpl.id === "manifesto")   return { paragraphs, verticalOffset };
+    if (tpl.hasPal)       return { lines, pal, sparkle, verticalOffset };
+    return { lines, verticalOffset };
   }
 
   const previewMaxW = 560;
@@ -619,6 +615,29 @@ export default function App() {
                   ＋ 選擇照片…
                 </button>
               )}
+            </div>
+          )}
+
+          {/* 垂直位置調整 */}
+          {!tpl.isEvent && (
+            <div>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                <span style={labelStyle}>文字垂直位置</span>
+                <span style={{fontSize:11,color:T.inkSoft,fontFamily:"monospace"}}>
+                  {verticalOffset > 0 ? `+${verticalOffset}` : verticalOffset}px
+                </span>
+              </div>
+              <input type="range" min={-200} max={200} value={verticalOffset}
+                onChange={e => setVerticalOffset(Number(e.target.value))}
+                style={{width:"100%",cursor:"pointer"}}/>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:T.inkSoft,marginTop:3}}>
+                <span>↑ 往上</span>
+                <button onClick={()=>setVerticalOffset(0)}
+                  style={{fontSize:10,border:"none",background:"#F0EDE8",borderRadius:4,padding:"1px 6px",cursor:"pointer",fontFamily:"inherit"}}>
+                  重置
+                </button>
+                <span>往下 ↓</span>
+              </div>
             </div>
           )}
 
