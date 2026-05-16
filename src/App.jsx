@@ -181,15 +181,17 @@ function T_WatercolorQuote({ lines=["Presence 臨在狀態","不是一種技術�
       <div style={{position:"absolute",top:-110,right:-120}}><WCCluster palette={p.tr} size={420} seed={14}/></div>
       <div style={{position:"absolute",bottom:-120,left:-130}}><WCCluster palette={p.bl} size={400} seed={17}/></div>
       <div style={{position:"absolute",bottom:-110,right:-130}}><WCCluster palette={p.br} size={430} seed={20}/></div>
-      <div style={{position:"absolute",top:110,left:"50%",transform:"translateX(-50%)"}}>
+      {/* Logo 固定在上方 */}
+      <div style={{position:"absolute",top:80,left:"50%",transform:"translateX(-50%)"}}>
         <Logo size={130}/>
       </div>
-      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
+      {/* 文字在 logo 下方空間垂直置中 */}
+      <div style={{position:"absolute",top:280,left:0,right:0,bottom:0,
         display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
-        padding:"160px 100px 60px"}}>
+        padding:"0 100px"}}>
         {sparkle && <Sparkle size={70}/>}
         <div style={{textAlign:"center",
-          color:T.teal700,fontSize:64,lineHeight:1.55,fontWeight:500,letterSpacing:"0.04em",marginTop:8}}>
+          color:T.teal700,fontSize:64,lineHeight:1.55,fontWeight:500,letterSpacing:"0.04em",marginTop:sparkle?12:0}}>
           {lines.map((l,i) => <div key={i}>{l}</div>)}
         </div>
       </div>
