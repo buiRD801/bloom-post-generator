@@ -618,38 +618,38 @@ export default function App() {
             </div>
           )}
 
-          {/* 垂直位置調整 */}
-          {!tpl.isEvent && (
-            <div>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-                <span style={labelStyle}>文字垂直位置</span>
-                <span style={{fontSize:11,color:T.inkSoft,fontFamily:"monospace"}}>
-                  {verticalOffset > 0 ? `+${verticalOffset}` : verticalOffset}px
-                </span>
-              </div>
-              <input type="range" min={-200} max={200} value={verticalOffset}
-                onChange={e => setVerticalOffset(Number(e.target.value))}
-                style={{width:"100%",cursor:"pointer"}}/>
-              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:T.inkSoft,marginTop:3}}>
-                <span>↑ 往上</span>
-                <button onClick={()=>setVerticalOffset(0)}
-                  style={{fontSize:10,border:"none",background:"#F0EDE8",borderRadius:4,padding:"1px 6px",cursor:"pointer",fontFamily:"inherit"}}>
-                  重置
-                </button>
-                <span>往下 ↓</span>
-              </div>
-            </div>
-          )}
-
           {/* Hint */}
           <div style={{
-            marginTop:"auto",padding:"11px 13px",
+            padding:"11px 13px",
             background:"#F5F1EA",borderRadius:8,
             fontSize:10,color:T.inkSoft,lineHeight:1.7,
           }}>
             💡 輸入文字後右側即時預覽。<br/>
             點「下載圖片」按鈕儲存 PNG。
           </div>
+
+          {/* 垂直位置調整 */}
+          {!tpl.isEvent && (
+            <div style={{padding:"12px 0"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                <span style={labelStyle}>文字垂直位置</span>
+                <span style={{fontSize:12,color:T.inkSoft,fontFamily:"monospace",fontWeight:600}}>
+                  {verticalOffset > 0 ? `+${verticalOffset}` : verticalOffset}px
+                </span>
+              </div>
+              <input type="range" min={-200} max={200} value={verticalOffset}
+                onChange={e => setVerticalOffset(Number(e.target.value))}
+                style={{width:"100%",cursor:"pointer",accentColor:T.teal700}}/>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:T.inkSoft,marginTop:6}}>
+                <span>↑ 往上</span>
+                <button onClick={()=>setVerticalOffset(0)}
+                  style={{fontSize:10,border:"none",background:"#F0EDE8",borderRadius:4,padding:"2px 8px",cursor:"pointer",fontFamily:"inherit",color:T.ink}}>
+                  重置
+                </button>
+                <span>往下 ↓</span>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* RIGHT PREVIEW PANEL */}
