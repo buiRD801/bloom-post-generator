@@ -355,7 +355,7 @@ export default function App() {
   const [pal, setPal] = useState("cool");
   const [photo, setPhoto] = useState(null);
   const [sparkle, setSparkle] = useState(true);
-  const [verticalOffset, setVerticalOffset] = useState(0);
+  const [verticalOffset, setVerticalOffset] = useState(-89);
   const [eventTitle, setEventTitle] = useState("教練倫理守則與規範");
   const [kicker, setKicker] = useState("教練公益課程");
   const [dateDay, setDateDay] = useState("08");
