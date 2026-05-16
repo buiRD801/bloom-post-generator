@@ -184,14 +184,14 @@ function T_WatercolorQuote({ lines=["Presence 臨在狀態","不是一種技術�
       <div style={{position:"absolute",top:110,left:"50%",transform:"translateX(-50%)"}}>
         <Logo size={130}/>
       </div>
-      <div style={{position:"absolute",top:"46%",left:0,right:0,textAlign:"center",
-        color:T.teal700,fontSize:64,lineHeight:1.55,fontWeight:500,letterSpacing:"0.04em",padding:"0 100px"}}>
-        {lines.map((l,i) => (
-          <div key={i} style={{display:"flex",justifyContent:"center",alignItems:"center",gap:18}}>
-            {sparkle && i===0 && <Sparkle size={70}/>}
-            <span>{l}</span>
-          </div>
-        ))}
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
+        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
+        padding:"160px 100px 60px"}}>
+        {sparkle && <Sparkle size={70}/>}
+        <div style={{textAlign:"center",
+          color:T.teal700,fontSize:64,lineHeight:1.55,fontWeight:500,letterSpacing:"0.04em",marginTop:8}}>
+          {lines.map((l,i) => <div key={i}>{l}</div>)}
+        </div>
       </div>
     </div>
   );
@@ -205,8 +205,10 @@ function T_LongStatement({ lines=["「沒有誰，可以為誰決定，","什麼
       <div style={{position:"absolute",bottom:-110,left:-120}}><WCCluster palette={["butter","peach","rose"]} size={360} seed={42}/></div>
       <div style={{position:"absolute",bottom:-60,right:-60}}><WCBlob color="aqua" size={180} seed={9} opacity={0.7}/></div>
       <div style={{position:"absolute",right:130,top:"38%"}}><Feather size={170}/></div>
-      <div style={{position:"absolute",top:"42%",left:0,right:0,textAlign:"center",
-        color:T.teal700,fontSize:58,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em",padding:"0 90px"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
+        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
+        padding:"60px 90px",textAlign:"center",
+        color:T.teal700,fontSize:58,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
         {lines.map((l,i) => <div key={i}>{l}</div>)}
       </div>
       <div style={{position:"absolute",bottom:110,left:"50%",transform:"translateX(-50%)"}}>
@@ -223,8 +225,10 @@ function T_Manifesto({ paragraphs=[["習慣了不說「我認為」","習慣了�
       <div style={{position:"absolute",top:60,right:-80}}><WCBlob color="peach" size={180} seed={2} opacity={0.7}/></div>
       <div style={{position:"absolute",bottom:200,left:-50}}><WCBlob color="butter" size={140} seed={3} opacity={0.7}/></div>
       <div style={{position:"absolute",bottom:380,right:60}}><WCBlob color="aqua" size={140} seed={4} opacity={0.7}/></div>
-      <div style={{position:"absolute",top:180,left:0,right:0,textAlign:"center",
-        color:T.teal900,fontSize:48,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em",padding:"0 90px"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
+        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
+        padding:"60px 90px",textAlign:"center",
+        color:T.teal900,fontSize:48,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
         {paragraphs.map((p,i) => (
           <div key={i} style={{marginBottom:i<paragraphs.length-1?50:0}}>
             {p.map((l,j) => <div key={j}>{l}</div>)}
@@ -284,8 +288,10 @@ function T_HeroPhoto({ lines=["每一次真實的對話","都是一次相遇"], 
     <div style={{position:"relative",width:1040,height:1040,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",inset:0,backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(15,31,56,0.82) 40%,rgba(15,31,56,0.2) 100%)"}}/>
-      <div style={{position:"absolute",bottom:160,left:0,right:0,textAlign:"center",
-        color:"white",fontSize:62,fontWeight:600,lineHeight:1.5,letterSpacing:"0.04em",padding:"0 90px"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
+        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
+        padding:"60px 90px",textAlign:"center",
+        color:"white",fontSize:62,fontWeight:600,lineHeight:1.5,letterSpacing:"0.04em"}}>
         {lines.map((l,i) => <div key={i}>{l}</div>)}
       </div>
       <div style={{position:"absolute",bottom:80,left:"50%",transform:"translateX(-50%)"}}>
