@@ -212,7 +212,7 @@ function T_WatercolorQuote({ lines=["Presence 臨在狀態","不是一種技術�
   );
 }
 
-function T_LongStatement({ lines=["「沒有誰，可以為誰決定，","什麼事情是最重要的。」"] }) {
+function T_LongStatement({ lines=["「沒有誰，可以為誰決定，","什麼事情是最重要的。」"], verticalOffset=0 }) {
   return (
     <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",top:-80,left:-110}}><WCCluster palette={["lilac","aqua","rose"]} size={340} seed={31}/></div>
@@ -223,6 +223,7 @@ function T_LongStatement({ lines=["「沒有誰，可以為誰決定，","什麼
       <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
         display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
         padding:"60px 90px",textAlign:"center",
+        transform:`translateY(${verticalOffset}px)`,
         color:T.teal700,fontSize:58,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
         {lines.map((l,i) => <div key={i}>{l}</div>)}
       </div>
@@ -233,7 +234,30 @@ function T_LongStatement({ lines=["「沒有誰，可以為誰決定，","什麼
   );
 }
 
-function T_Manifesto({ paragraphs=[["習慣了不說「我認為」","習慣了把自己藏進「共識」裡"],["教練該如何維持當下","深度陪伴重新找回「我」"]] }) {
+function T_Manifesto({ paragraphs=[["習慣了不說「我認為」","習慣了把自己藏進「共識」裡"],["教練該如何維持當下","深度陪伴重新找回「我」"]], verticalOffset=0 }) {
+  return (
+    <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
+      <div style={{position:"absolute",top:-90,left:-100}}><WCCluster palette={["lilac","aqua","rose"]} size={360} seed={61}/></div>
+      <div style={{position:"absolute",top:60,right:-80}}><WCBlob color="peach" size={180} seed={2} opacity={0.7}/></div>
+      <div style={{position:"absolute",bottom:200,left:-50}}><WCBlob color="butter" size={140} seed={3} opacity={0.7}/></div>
+      <div style={{position:"absolute",bottom:380,right:60}}><WCBlob color="aqua" size={140} seed={4} opacity={0.7}/></div>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
+        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
+        padding:"60px 90px",textAlign:"center",
+        transform:`translateY(${verticalOffset}px)`,
+        color:T.teal900,fontSize:48,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
+        {paragraphs.map((p,i) => (
+          <div key={i} style={{marginBottom:i<paragraphs.length-1?50:0}}>
+            {p.map((l,j) => <div key={j}>{l}</div>)}
+          </div>
+        ))}
+      </div>
+      <div style={{position:"absolute",bottom:100,left:"50%",transform:"translateX(-50%)"}}>
+        <Logo size={56}/>
+      </div>
+    </div>
+  );
+}
   return (
     <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",top:-90,left:-100}}><WCCluster palette={["lilac","aqua","rose"]} size={360} seed={61}/></div>
@@ -257,7 +281,23 @@ function T_Manifesto({ paragraphs=[["習慣了不說「我認為」","習慣了�
   );
 }
 
-function T_PhotoQuote({ lines=["有時候，","最有力量的介入，","不是多說一句話。"], photo=null }) {
+function T_PhotoQuote({ lines=["有時候，","最有力量的介入，","不是多說一句話。"], photo=null, verticalOffset=0 }) {
+  const imgSrc = photo || "https://images.unsplash.com/photo-1573497019418-b400bb3ab074?w=900&q=80";
+  return (
+    <div style={{position:"relative",width:1040,height:1040,background:T.paperCream,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
+      <div style={{position:"absolute",right:0,top:0,width:"58%",height:"88%",
+        backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
+      <div style={{position:"absolute",left:"30%",top:0,width:"30%",height:"88%",
+        background:`linear-gradient(to right, ${T.paperCream}, transparent)`}}/>
+      <div style={{position:"absolute",left:80,top:"30%",right:"45%",
+        transform:`translateY(${verticalOffset}px)`,
+        color:T.teal900,fontSize:52,lineHeight:1.6,fontWeight:500,letterSpacing:"0.04em"}}>
+        {lines.map((l,i) => <div key={i}>{l}</div>)}
+      </div>
+      <div style={{position:"absolute",left:80,bottom:100}}><Logo size={56}/></div>
+    </div>
+  );
+}
   const imgSrc = photo || "https://images.unsplash.com/photo-1573497019418-b400bb3ab074?w=900&q=80";
   return (
     <div style={{position:"relative",width:1040,height:1040,background:T.paperCream,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
@@ -274,7 +314,28 @@ function T_PhotoQuote({ lines=["有時候，","最有力量的介入，","不是
   );
 }
 
-function T_SparkleQuote({ lines=["在場","不是保持靜止","而是允許自己","被當下觸動"], pal="cool" }) {
+function T_SparkleQuote({ lines=["在場","不是保持靜止","而是允許自己","被當下觸動"], pal="cool", verticalOffset=0 }) {
+  const p = PALS[pal]||PALS.cool;
+  return (
+    <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
+      <div style={{position:"absolute",top:-90,left:-90}}><WCCluster palette={p.tl} size={340} seed={21}/></div>
+      <div style={{position:"absolute",bottom:-100,right:-100}}><WCCluster palette={p.br} size={380} seed={24}/></div>
+      <div style={{position:"absolute",top:"50%",left:"50%",transform:`translate(-50%,calc(-50% + ${verticalOffset}px))`,textAlign:"center",
+        color:T.teal700,fontSize:68,lineHeight:1.6,fontWeight:600,letterSpacing:"0.05em",padding:"0 80px"}}>
+        {lines.map((l,i) => (
+          <div key={i} style={{display:"flex",justifyContent:"center",alignItems:"center",gap:12}}>
+            {(i===0||i===lines.length-1) && <Sparkle size={48}/>}
+            <span>{l}</span>
+            {(i===0||i===lines.length-1) && <Sparkle size={48}/>}
+          </div>
+        ))}
+      </div>
+      <div style={{position:"absolute",bottom:90,left:"50%",transform:"translateX(-50%)"}}>
+        <Logo size={84}/>
+      </div>
+    </div>
+  );
+}
   const p = PALS[pal]||PALS.cool;
   return (
     <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
@@ -297,7 +358,25 @@ function T_SparkleQuote({ lines=["在場","不是保持靜止","而是允許自�
   );
 }
 
-function T_HeroPhoto({ lines=["每一次真實的對話","都是一次相遇"], photo=null }) {
+function T_HeroPhoto({ lines=["每一次真實的對話","都是一次相遇"], photo=null, verticalOffset=0 }) {
+  const imgSrc = photo || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80";
+  return (
+    <div style={{position:"relative",width:1040,height:1040,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
+      <div style={{position:"absolute",inset:0,backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
+      <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(15,31,56,0.82) 40%,rgba(15,31,56,0.2) 100%)"}}/>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
+        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
+        padding:"60px 90px",textAlign:"center",
+        transform:`translateY(${verticalOffset}px)`,
+        color:"white",fontSize:62,fontWeight:600,lineHeight:1.5,letterSpacing:"0.04em"}}>
+        {lines.map((l,i) => <div key={i}>{l}</div>)}
+      </div>
+      <div style={{position:"absolute",bottom:80,left:"50%",transform:"translateX(-50%)"}}>
+        <Logo size={70} white/>
+      </div>
+    </div>
+  );
+}
   const imgSrc = photo || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80";
   return (
     <div style={{position:"relative",width:1040,height:1040,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
@@ -378,8 +457,8 @@ export default function App() {
 
   function buildProps() {
     if (tpl.isEvent)      return { title:eventTitle, kicker, dateDay, dateMonth };
-    if (tpl.id === "photo-quote") return { lines, photo };
-    if (tpl.id === "hero-photo")  return { lines, photo };
+    if (tpl.id === "photo-quote") return { lines, photo, verticalOffset };
+    if (tpl.id === "hero-photo")  return { lines, photo, verticalOffset };
     if (tpl.id === "manifesto")   return { paragraphs, verticalOffset };
     if (tpl.hasPal)       return { lines, pal, sparkle, verticalOffset };
     return { lines, verticalOffset };
@@ -477,7 +556,7 @@ export default function App() {
             <span style={labelStyle}>範本 Template</span>
             <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
               {TEMPLATES.map(t => (
-                <button key={t.id} onClick={()=>{setTplId(t.id);setPhoto(null);}} style={{padding:"5px 11px",fontSize:12,border:"none",borderRadius:20,cursor:"pointer",fontFamily:"inherit",background:tplId===t.id?T.teal700:"#F0EDE8",color:tplId===t.id?"white":T.ink,fontWeight:tplId===t.id?600:400,transition:"all .15s",lineHeight:1.5}}>
+                <button key={t.id} onClick={()=>{setTplId(t.id);setPhoto(null);setVerticalOffset(0);}} style={{padding:"5px 11px",fontSize:12,border:"none",borderRadius:20,cursor:"pointer",fontFamily:"inherit",background:tplId===t.id?T.teal700:"#F0EDE8",color:tplId===t.id?"white":T.ink,fontWeight:tplId===t.id?600:400,transition:"all .15s",lineHeight:1.5}}>
                   {t.label}
                 </button>
               ))}
