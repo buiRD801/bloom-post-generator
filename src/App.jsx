@@ -363,6 +363,12 @@ export default function App() {
   const fileRef = useRef(null);
 
   useEffect(() => { loadFonts(); }, []);
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
 
   const tpl = TEMPLATES.find(t => t.id === tplId) || TEMPLATES[0];
   const { w, h } = tpl;
@@ -379,7 +385,7 @@ export default function App() {
     return { lines, verticalOffset };
   }
 
-  const previewMaxW = 560;
+  const previewMaxW = isMobile ? window.innerWidth - 32 : 560;
   const scale = Math.min(1, previewMaxW / w);
   const postRef = useRef(null);
 
@@ -436,277 +442,143 @@ export default function App() {
   };
 
   return (
-    <div style={{
-      minHeight:"100vh",
-      background:"#EDE8DF",
-      fontFamily:"'Noto Sans TC','Noto Sans',system-ui,sans-serif",
-      display:"flex",
-      flexDirection:"column",
-    }}>
+    <div style={{minHeight:"100vh",background:"#EDE8DF",fontFamily:"'Noto Sans TC','Noto Sans',system-ui,sans-serif",display:"flex",flexDirection:"column"}}>
       {/* Header */}
-      <div style={{
-        background:T.teal900,
-        color:"white",
-        padding:"18px 32px",
-        display:"flex",
-        alignItems:"center",
-        gap:20,
-        boxShadow:"0 2px 16px rgba(0,0,0,0.2)",
-      }}>
-        <img src={LOGO_WHITE_SRC} alt="如光" style={{height:42,width:"auto"}}/>
-        <div style={{borderLeft:"1px solid rgba(255,255,255,0.2)",paddingLeft:20}}>
-          <div style={{fontSize:17,fontWeight:600,letterSpacing:"0.04em",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>社群貼文產生器</div>
-          <div style={{fontSize:11,opacity:0.55,letterSpacing:"0.1em",marginTop:2}}>Social Post Generator · 如光品牌系統</div>
+      <div style={{background:T.teal900,color:"white",padding:isMobile?"12px 16px":"18px 32px",display:"flex",alignItems:"center",gap:14,boxShadow:"0 2px 16px rgba(0,0,0,0.2)",flexShrink:0}}>
+        <img src={LOGO_WHITE_SRC} alt="如光" style={{height:isMobile?32:42,width:"auto"}}/>
+        <div style={{borderLeft:"1px solid rgba(255,255,255,0.2)",paddingLeft:14}}>
+          <div style={{fontSize:isMobile?14:17,fontWeight:600,letterSpacing:"0.04em",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>社群貼文產生器</div>
+          {!isMobile && <div style={{fontSize:11,opacity:0.55,letterSpacing:"0.1em",marginTop:2}}>Social Post Generator · 如光品牌系統</div>}
         </div>
       </div>
 
       {/* Body */}
-      <div style={{
-        flex:1,
-        display:"grid",
-        gridTemplateColumns:"300px 1fr",
-        minHeight:0,
-        height:"calc(100vh - 78px)",
-        overflow:"hidden",
-      }}>
-        {/* LEFT PANEL */}
-        <div style={{
-          background:"white",
-          borderRight:"1px solid rgba(0,0,0,0.07)",
-          padding:"20px 18px",
-          overflowY:"auto",
-          height:"100%",
-          display:"flex",
-          flexDirection:"column",
-          gap:18,
-        }}>
+      <div style={{flex:1,display:isMobile?"flex":"grid",flexDirection:isMobile?"column":undefined,gridTemplateColumns:isMobile?undefined:"300px 1fr",minHeight:0,height:isMobile?undefined:"calc(100vh - 78px)",overflow:isMobile?undefined:"hidden"}}>
 
-          {/* Template picker */}
+        {/* Mobile: Preview on top */}
+        {isMobile && (
+          <div style={{display:"flex",flexDirection:"column",alignItems:"center",padding:"16px 16px 8px",background:"#EDE8DF",gap:12}}>
+            <div style={{boxShadow:"0 8px 32px rgba(20,40,60,0.18)",borderRadius:3,overflow:"hidden",width:w*scale,height:h*scale,flexShrink:0}}>
+              <div ref={postRef} style={{transform:`scale(${scale})`,transformOrigin:"top left",width:w,height:h}}>
+                <tpl.Comp {...buildProps()}/>
+              </div>
+            </div>
+            <button onClick={handleDownload} disabled={downloading} style={{padding:"12px 0",background:downloading?"#888":T.teal700,color:"white",border:"none",borderRadius:8,fontSize:15,fontWeight:600,cursor:downloading?"not-allowed":"pointer",fontFamily:"inherit",letterSpacing:"0.04em",boxShadow:"0 2px 8px rgba(46,124,142,0.3)",width:"100%",maxWidth:360}}>
+              {downloading?"⏳ 處理中…":"⬇ 下載圖片 PNG"}
+            </button>
+          </div>
+        )}
+
+        {/* LEFT PANEL - Controls */}
+        <div style={{background:"white",borderRight:isMobile?"none":"1px solid rgba(0,0,0,0.07)",borderTop:isMobile?"1px solid rgba(0,0,0,0.07)":"none",padding:isMobile?"16px 16px 40px":"20px 18px",overflowY:"auto",height:isMobile?undefined:"100%",display:"flex",flexDirection:"column",gap:16}}>
+
           <div>
             <span style={labelStyle}>範本 Template</span>
             <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
               {TEMPLATES.map(t => (
-                <button key={t.id} onClick={() => { setTplId(t.id); setPhoto(null); }}
-                  style={{
-                    padding:"5px 11px",fontSize:12,border:"none",borderRadius:20,cursor:"pointer",
-                    fontFamily:"inherit",
-                    background: tplId===t.id ? T.teal700 : "#F0EDE8",
-                    color: tplId===t.id ? "white" : T.ink,
-                    fontWeight: tplId===t.id ? 600 : 400,
-                    transition:"all .15s",
-                    lineHeight:1.5,
-                  }}>
+                <button key={t.id} onClick={()=>{setTplId(t.id);setPhoto(null);}} style={{padding:"5px 11px",fontSize:12,border:"none",borderRadius:20,cursor:"pointer",fontFamily:"inherit",background:tplId===t.id?T.teal700:"#F0EDE8",color:tplId===t.id?"white":T.ink,fontWeight:tplId===t.id?600:400,transition:"all .15s",lineHeight:1.5}}>
                   {t.label}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Divider */}
           <div style={{borderTop:"1px solid #F0EDE8"}}/>
 
-          {/* Text input */}
           {!tpl.isEvent && (
             <div>
               <label style={labelStyle}>貼文文字</label>
-              <textarea value={text} onChange={e => setText(e.target.value)}
-                rows={6}
-                placeholder="輸入文字…"
-                style={{
-                  ...inputStyle,
-                  fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif",
-                  lineHeight:1.8,resize:"vertical",
-                  fontSize:14,
-                }}
-              />
+              <textarea value={text} onChange={e=>setText(e.target.value)} rows={5} placeholder="輸入文字…"
+                style={{...inputStyle,fontFamily:"'Noto Serif TC',serif",lineHeight:1.8,resize:"vertical",fontSize:14}}/>
               <div style={{fontSize:10,color:T.inkSoft,marginTop:5,lineHeight:1.7}}>
-                <code style={{background:"#F0EDE8",padding:"1px 4px",borderRadius:3,fontFamily:"monospace"}}>／</code>
-                {" "}換行　
-                <code style={{background:"#F0EDE8",padding:"1px 4px",borderRadius:3,fontFamily:"monospace"}}>／／</code>
-                {" "}分段（宣言體）
+                <code style={{background:"#F0EDE8",padding:"1px 4px",borderRadius:3,fontFamily:"monospace"}}>／</code>{" "}換行　
+                <code style={{background:"#F0EDE8",padding:"1px 4px",borderRadius:3,fontFamily:"monospace"}}>／／</code>{" "}分段（宣言體）
               </div>
-              {/* 垂直位置滑桿 */}
               <div style={{marginTop:14}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
                   <span style={{fontSize:10,fontWeight:700,letterSpacing:"0.18em",color:T.inkSoft,textTransform:"uppercase"}}>文字垂直位置</span>
-                  <span style={{fontSize:12,color:T.teal700,fontFamily:"monospace",fontWeight:700}}>
-                    {verticalOffset > 0 ? `+${verticalOffset}` : verticalOffset}px
-                  </span>
+                  <span style={{fontSize:12,color:T.teal700,fontFamily:"monospace",fontWeight:700}}>{verticalOffset>0?`+${verticalOffset}`:verticalOffset}px</span>
                 </div>
-                <input type="range" min={-200} max={200} value={verticalOffset}
-                  onChange={e => setVerticalOffset(Number(e.target.value))}
-                  style={{width:"100%",cursor:"pointer",accentColor:T.teal700}}/>
+                <input type="range" min={-200} max={200} value={verticalOffset} onChange={e=>setVerticalOffset(Number(e.target.value))} style={{width:"100%",cursor:"pointer",accentColor:T.teal700}}/>
                 <div style={{display:"flex",justifyContent:"space-between",fontSize:10,color:T.inkSoft,marginTop:4}}>
                   <span>↑ 往上</span>
-                  <button onClick={()=>setVerticalOffset(0)}
-                    style={{fontSize:10,border:"none",background:"#F0EDE8",borderRadius:4,padding:"2px 8px",cursor:"pointer",fontFamily:"inherit"}}>
-                    重置
-                  </button>
+                  <button onClick={()=>setVerticalOffset(0)} style={{fontSize:10,border:"none",background:"#F0EDE8",borderRadius:4,padding:"2px 8px",cursor:"pointer",fontFamily:"inherit"}}>重置</button>
                   <span>往下 ↓</span>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Event fields */}
           {tpl.isEvent && (
             <div style={{display:"flex",flexDirection:"column",gap:10}}>
-              <div>
-                <label style={labelStyle}>副標題 Kicker</label>
-                <input value={kicker} onChange={e => setKicker(e.target.value)} style={inputStyle}/>
-              </div>
-              <div>
-                <label style={labelStyle}>主標題 Title</label>
-                <input value={eventTitle} onChange={e => setEventTitle(e.target.value)} style={inputStyle}/>
-              </div>
+              <div><label style={labelStyle}>副標題 Kicker</label><input value={kicker} onChange={e=>setKicker(e.target.value)} style={inputStyle}/></div>
+              <div><label style={labelStyle}>主標題 Title</label><input value={eventTitle} onChange={e=>setEventTitle(e.target.value)} style={inputStyle}/></div>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-                <div>
-                  <label style={labelStyle}>日 Day</label>
-                  <input value={dateDay} onChange={e => setDateDay(e.target.value)} style={inputStyle}/>
-                </div>
-                <div>
-                  <label style={labelStyle}>月 Month</label>
-                  <input value={dateMonth} onChange={e => setDateMonth(e.target.value)} style={inputStyle}/>
-                </div>
+                <div><label style={labelStyle}>日 Day</label><input value={dateDay} onChange={e=>setDateDay(e.target.value)} style={inputStyle}/></div>
+                <div><label style={labelStyle}>月 Month</label><input value={dateMonth} onChange={e=>setDateMonth(e.target.value)} style={inputStyle}/></div>
               </div>
             </div>
           )}
 
-          {/* Palette */}
           {tpl.hasPal && (
             <div>
               <span style={labelStyle}>配色 Palette</span>
               <div style={{display:"flex",gap:6}}>
-                {[["cool","冷靜"],["warm","溫暖"],["fresh","清新"]].map(([v,l]) => (
-                  <button key={v} onClick={() => setPal(v)}
-                    style={{
-                      flex:1,padding:"7px 0",fontSize:12,border:"none",borderRadius:8,cursor:"pointer",
-                      fontFamily:"inherit",
-                      background: pal===v ? T.teal500 : "#F0EDE8",
-                      color: pal===v ? "white" : T.ink,
-                      fontWeight: pal===v ? 600 : 400,
-                      transition:"all .15s",
-                    }}>{l}</button>
+                {[["cool","冷靜"],["warm","溫暖"],["fresh","清新"]].map(([v,l])=>(
+                  <button key={v} onClick={()=>setPal(v)} style={{flex:1,padding:"7px 0",fontSize:12,border:"none",borderRadius:8,cursor:"pointer",fontFamily:"inherit",background:pal===v?T.teal500:"#F0EDE8",color:pal===v?"white":T.ink,fontWeight:pal===v?600:400,transition:"all .15s"}}>{l}</button>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Sparkle toggle */}
           {tpl.hasPal && (
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
               <span style={{fontSize:12,color:T.ink}}>閃星裝飾 Sparkle</span>
-              <button onClick={() => setSparkle(s => !s)} style={{
-                width:42,height:22,borderRadius:11,border:"none",cursor:"pointer",padding:0,
-                background: sparkle ? T.teal500 : "#CCC",
-                position:"relative",transition:"background .2s",
-              }}>
-                <span style={{
-                  position:"absolute",top:2,left: sparkle ? 20 : 2,
-                  width:18,height:18,borderRadius:"50%",background:"white",transition:"left .2s",
-                }}/>
+              <button onClick={()=>setSparkle(s=>!s)} style={{width:42,height:22,borderRadius:11,border:"none",cursor:"pointer",padding:0,background:sparkle?T.teal500:"#CCC",position:"relative",transition:"background .2s"}}>
+                <span style={{position:"absolute",top:2,left:sparkle?20:2,width:18,height:18,borderRadius:"50%",background:"white",transition:"left .2s"}}/>
               </button>
             </div>
           )}
 
-          {/* Photo upload */}
           {tpl.hasPhoto && (
             <div>
               <span style={labelStyle}>背景照片 Photo</span>
-              <input ref={fileRef} type="file" accept="image/*" style={{display:"none"}}
-                onChange={e => {
-                  const f = e.target.files?.[0];
-                  if (!f) return;
-                  const r = new FileReader();
-                  r.onload = ev => setPhoto(ev.target.result);
-                  r.readAsDataURL(f);
-                }}/>
-              {photo ? (
+              <input ref={fileRef} type="file" accept="image/*" style={{display:"none"}} onChange={e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=ev=>setPhoto(ev.target.result);r.readAsDataURL(f);}}/>
+              {photo?(
                 <div style={{display:"flex",gap:8,alignItems:"center"}}>
                   <img src={photo} style={{width:44,height:44,objectFit:"cover",borderRadius:6,border:"1px solid #ddd"}}/>
-                  <button onClick={() => fileRef.current?.click()}
-                    style={{...inputStyle,flex:1,cursor:"pointer",textAlign:"center"}}>重新上傳</button>
-                  <button onClick={() => { setPhoto(null); if(fileRef.current) fileRef.current.value=""; }}
-                    style={{...inputStyle,width:36,padding:"9px 8px",cursor:"pointer"}}>✕</button>
+                  <button onClick={()=>fileRef.current?.click()} style={{...inputStyle,flex:1,cursor:"pointer",textAlign:"center"}}>重新上傳</button>
+                  <button onClick={()=>{setPhoto(null);if(fileRef.current)fileRef.current.value="";}} style={{...inputStyle,width:36,padding:"9px 8px",cursor:"pointer"}}>✕</button>
                 </div>
-              ) : (
-                <button onClick={() => fileRef.current?.click()} style={{
-                  width:"100%",padding:"10px",fontSize:13,
-                  border:"1.5px dashed #C0BAB0",borderRadius:8,background:"#FDFBF6",
-                  cursor:"pointer",color:T.inkSoft,fontFamily:"inherit",
-                }}>
-                  ＋ 選擇照片…
-                </button>
+              ):(
+                <button onClick={()=>fileRef.current?.click()} style={{width:"100%",padding:"10px",fontSize:13,border:"1.5px dashed #C0BAB0",borderRadius:8,background:"#FDFBF6",cursor:"pointer",color:T.inkSoft,fontFamily:"inherit"}}>＋ 選擇照片…</button>
               )}
             </div>
           )}
 
-          {/* Hint */}
-          <div style={{
-            padding:"11px 13px",
-            background:"#F5F1EA",borderRadius:8,
-            fontSize:10,color:T.inkSoft,lineHeight:1.7,
-          }}>
-            💡 輸入文字後右側即時預覽。<br/>
-            點「下載圖片」按鈕儲存 PNG。
+          <div style={{padding:"11px 13px",background:"#F5F1EA",borderRadius:8,fontSize:10,color:T.inkSoft,lineHeight:1.7}}>
+            💡 輸入文字後{isMobile?"上方":"右側"}即時預覽。<br/>點「下載圖片」按鈕儲存 PNG。
           </div>
         </div>
 
-        {/* RIGHT PREVIEW PANEL */}
-        <div style={{
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center",
-          padding:40,
-          background:"#EDE8DF",
-          overflow:"auto",
-        }}>
-          <div style={{
-            display:"flex",
-            flexDirection:"column",
-            alignItems:"center",
-            gap:14,
-          }}>
-            <div style={{
-              fontSize:10,letterSpacing:"0.12em",color:"rgba(0,0,0,0.4)",textTransform:"uppercase",
-            }}>
-              {tpl.label} · {tpl.labelEn} · {w}×{h}px · 預覽 {Math.round(scale*100)}%
-            </div>
-            <div style={{
-              boxShadow:"0 16px 60px rgba(20,40,60,0.18), 0 3px 10px rgba(20,40,60,0.08)",
-              borderRadius:3,
-              overflow:"hidden",
-              width: w*scale,
-              height: h*scale,
-              flexShrink: 0,
-            }}>
-              <div ref={postRef} style={{
-                transform:`scale(${scale})`,
-                transformOrigin:"top left",
-                width:w,
-                height:h,
-              }}>
-                <tpl.Comp {...buildProps()}/>
+        {/* Desktop: Right preview panel */}
+        {!isMobile && (
+          <div style={{display:"flex",alignItems:"center",justifyContent:"center",padding:40,background:"#EDE8DF",overflow:"auto"}}>
+            <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:14}}>
+              <div style={{fontSize:10,letterSpacing:"0.12em",color:"rgba(0,0,0,0.4)",textTransform:"uppercase"}}>
+                {tpl.label} · {tpl.labelEn} · {w}×{h}px · 預覽 {Math.round(scale*100)}%
               </div>
+              <div style={{boxShadow:"0 16px 60px rgba(20,40,60,0.18), 0 3px 10px rgba(20,40,60,0.08)",borderRadius:3,overflow:"hidden",width:w*scale,height:h*scale,flexShrink:0}}>
+                <div ref={postRef} style={{transform:`scale(${scale})`,transformOrigin:"top left",width:w,height:h}}>
+                  <tpl.Comp {...buildProps()}/>
+                </div>
+              </div>
+              <button onClick={handleDownload} disabled={downloading} style={{padding:"10px 28px",background:downloading?"#888":T.teal700,color:"white",border:"none",borderRadius:8,fontSize:14,fontWeight:600,cursor:downloading?"not-allowed":"pointer",fontFamily:"'Noto Sans TC',sans-serif",letterSpacing:"0.04em",boxShadow:"0 2px 8px rgba(46,124,142,0.3)",transition:"background .2s"}}>
+                {downloading?"⏳ 處理中…":"⬇ 下載圖片 PNG"}
+              </button>
             </div>
-            <button onClick={handleDownload} disabled={downloading} style={{
-              padding:"10px 28px",
-              background: downloading ? "#888" : T.teal700,
-              color:"white",
-              border:"none",
-              borderRadius:8,
-              fontSize:14,
-              fontWeight:600,
-              cursor: downloading ? "not-allowed" : "pointer",
-              fontFamily:"'Noto Sans TC',sans-serif",
-              letterSpacing:"0.04em",
-              boxShadow:"0 2px 8px rgba(46,124,142,0.3)",
-              transition:"background .2s",
-            }}>
-              {downloading ? "⏳ 處理中…" : "⬇ 下載圖片 PNG"}
-            </button>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
