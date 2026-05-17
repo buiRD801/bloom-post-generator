@@ -388,11 +388,12 @@ export default function App() {
   const previewMaxW = isMobile ? window.innerWidth - 32 : 560;
   const scale = Math.min(1, previewMaxW / w);
   const postRef = useRef(null);
+  const hiddenRef = useRef(null);
 
   const [downloading, setDownloading] = useState(false);
 
   async function handleDownload() {
-    const node = postRef.current;
+    const node = hiddenRef.current;
     if (!node || downloading) return;
     setDownloading(true);
     try {
@@ -406,7 +407,7 @@ export default function App() {
         });
       }
       const canvas = await window.html2canvas(node, {
-        scale: 2,
+        scale: 1,
         useCORS: true,
         allowTaint: true,
         width: w,
@@ -421,7 +422,7 @@ export default function App() {
       a.click();
       document.body.removeChild(a);
     } catch(e) {
-      alert("下載遇到問題，請嘗試右鍵預覽圖片選「另存圖片」。\n錯誤：" + e.message);
+      alert("下載遇到問題。\n錯誤：" + e.message);
     } finally {
       setDownloading(false);
     }
@@ -579,6 +580,13 @@ export default function App() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* 隱藏的原尺寸容器，用於正確下載 */}
+      <div style={{position:"fixed",top:0,left:"-9999px",width:w,height:h,overflow:"hidden",zIndex:-1}}>
+        <div ref={hiddenRef} style={{width:w,height:h}}>
+          <tpl.Comp {...buildProps()}/>
+        </div>
       </div>
     </div>
   );
