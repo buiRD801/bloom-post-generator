@@ -220,11 +220,7 @@ function T_LongStatement({ lines=["「沒有誰，可以為誰決定，","什麼
       <div style={{position:"absolute",bottom:-110,left:-120}}><WCCluster palette={["butter","peach","rose"]} size={360} seed={42}/></div>
       <div style={{position:"absolute",bottom:-60,right:-60}}><WCBlob color="aqua" size={180} seed={9} opacity={0.7}/></div>
       <div style={{position:"absolute",right:130,top:"38%"}}><Feather size={170}/></div>
-      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
-        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
-        padding:"60px 90px",textAlign:"center",
-        transform:`translateY(${verticalOffset}px)`,
-        color:T.teal700,fontSize:58,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",padding:"60px 90px",textAlign:"center",transform:`translateY(${verticalOffset}px)`,color:T.teal700,fontSize:58,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
         {lines.map((l,i) => <div key={i}>{l}</div>)}
       </div>
       <div style={{position:"absolute",bottom:110,left:"50%",transform:"translateX(-50%)"}}>
@@ -241,33 +237,7 @@ function T_Manifesto({ paragraphs=[["習慣了不說「我認為」","習慣了�
       <div style={{position:"absolute",top:60,right:-80}}><WCBlob color="peach" size={180} seed={2} opacity={0.7}/></div>
       <div style={{position:"absolute",bottom:200,left:-50}}><WCBlob color="butter" size={140} seed={3} opacity={0.7}/></div>
       <div style={{position:"absolute",bottom:380,right:60}}><WCBlob color="aqua" size={140} seed={4} opacity={0.7}/></div>
-      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
-        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
-        padding:"60px 90px",textAlign:"center",
-        transform:`translateY(${verticalOffset}px)`,
-        color:T.teal900,fontSize:48,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
-        {paragraphs.map((p,i) => (
-          <div key={i} style={{marginBottom:i<paragraphs.length-1?50:0}}>
-            {p.map((l,j) => <div key={j}>{l}</div>)}
-          </div>
-        ))}
-      </div>
-      <div style={{position:"absolute",bottom:100,left:"50%",transform:"translateX(-50%)"}}>
-        <Logo size={56}/>
-      </div>
-    </div>
-  );
-}
-  return (
-    <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
-      <div style={{position:"absolute",top:-90,left:-100}}><WCCluster palette={["lilac","aqua","rose"]} size={360} seed={61}/></div>
-      <div style={{position:"absolute",top:60,right:-80}}><WCBlob color="peach" size={180} seed={2} opacity={0.7}/></div>
-      <div style={{position:"absolute",bottom:200,left:-50}}><WCBlob color="butter" size={140} seed={3} opacity={0.7}/></div>
-      <div style={{position:"absolute",bottom:380,right:60}}><WCBlob color="aqua" size={140} seed={4} opacity={0.7}/></div>
-      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
-        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
-        padding:"60px 90px",textAlign:"center",
-        color:T.teal900,fontSize:48,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",padding:"60px 90px",textAlign:"center",transform:`translateY(${verticalOffset}px)`,color:T.teal900,fontSize:48,lineHeight:1.7,fontWeight:500,letterSpacing:"0.04em"}}>
         {paragraphs.map((p,i) => (
           <div key={i} style={{marginBottom:i<paragraphs.length-1?50:0}}>
             {p.map((l,j) => <div key={j}>{l}</div>)}
@@ -285,28 +255,9 @@ function T_PhotoQuote({ lines=["有時候，","最有力量的介入，","不是
   const imgSrc = photo || "https://images.unsplash.com/photo-1573497019418-b400bb3ab074?w=900&q=80";
   return (
     <div style={{position:"relative",width:1040,height:1040,background:T.paperCream,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
-      <div style={{position:"absolute",right:0,top:0,width:"58%",height:"88%",
-        backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
-      <div style={{position:"absolute",left:"30%",top:0,width:"30%",height:"88%",
-        background:`linear-gradient(to right, ${T.paperCream}, transparent)`}}/>
-      <div style={{position:"absolute",left:80,top:"30%",right:"45%",
-        transform:`translateY(${verticalOffset}px)`,
-        color:T.teal900,fontSize:52,lineHeight:1.6,fontWeight:500,letterSpacing:"0.04em"}}>
-        {lines.map((l,i) => <div key={i}>{l}</div>)}
-      </div>
-      <div style={{position:"absolute",left:80,bottom:100}}><Logo size={56}/></div>
-    </div>
-  );
-}
-  const imgSrc = photo || "https://images.unsplash.com/photo-1573497019418-b400bb3ab074?w=900&q=80";
-  return (
-    <div style={{position:"relative",width:1040,height:1040,background:T.paperCream,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
-      <div style={{position:"absolute",right:0,top:0,width:"58%",height:"88%",
-        backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
-      <div style={{position:"absolute",left:"30%",top:0,width:"30%",height:"88%",
-        background:`linear-gradient(to right, ${T.paperCream}, transparent)`}}/>
-      <div style={{position:"absolute",left:80,top:"30%",right:"45%",
-        color:T.teal900,fontSize:52,lineHeight:1.6,fontWeight:500,letterSpacing:"0.04em"}}>
+      <div style={{position:"absolute",right:0,top:0,width:"58%",height:"88%",backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
+      <div style={{position:"absolute",left:"30%",top:0,width:"30%",height:"88%",background:`linear-gradient(to right, ${T.paperCream}, transparent)`}}/>
+      <div style={{position:"absolute",left:80,top:"30%",right:"45%",transform:`translateY(${verticalOffset}px)`,color:T.teal900,fontSize:52,lineHeight:1.6,fontWeight:500,letterSpacing:"0.04em"}}>
         {lines.map((l,i) => <div key={i}>{l}</div>)}
       </div>
       <div style={{position:"absolute",left:80,bottom:100}}><Logo size={56}/></div>
@@ -320,29 +271,7 @@ function T_SparkleQuote({ lines=["在場","不是保持靜止","而是允許自�
     <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",top:-90,left:-90}}><WCCluster palette={p.tl} size={340} seed={21}/></div>
       <div style={{position:"absolute",bottom:-100,right:-100}}><WCCluster palette={p.br} size={380} seed={24}/></div>
-      <div style={{position:"absolute",top:"50%",left:"50%",transform:`translate(-50%,calc(-50% + ${verticalOffset}px))`,textAlign:"center",
-        color:T.teal700,fontSize:68,lineHeight:1.6,fontWeight:600,letterSpacing:"0.05em",padding:"0 80px"}}>
-        {lines.map((l,i) => (
-          <div key={i} style={{display:"flex",justifyContent:"center",alignItems:"center",gap:12}}>
-            {(i===0||i===lines.length-1) && <Sparkle size={48}/>}
-            <span>{l}</span>
-            {(i===0||i===lines.length-1) && <Sparkle size={48}/>}
-          </div>
-        ))}
-      </div>
-      <div style={{position:"absolute",bottom:90,left:"50%",transform:"translateX(-50%)"}}>
-        <Logo size={84}/>
-      </div>
-    </div>
-  );
-}
-  const p = PALS[pal]||PALS.cool;
-  return (
-    <div style={{position:"relative",width:1040,height:1040,background:T.paper,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
-      <div style={{position:"absolute",top:-90,left:-90}}><WCCluster palette={p.tl} size={340} seed={21}/></div>
-      <div style={{position:"absolute",bottom:-100,right:-100}}><WCCluster palette={p.br} size={380} seed={24}/></div>
-      <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",textAlign:"center",
-        color:T.teal700,fontSize:68,lineHeight:1.6,fontWeight:600,letterSpacing:"0.05em",padding:"0 80px"}}>
+      <div style={{position:"absolute",top:"50%",left:"50%",transform:`translate(-50%,calc(-50% + ${verticalOffset}px))`,textAlign:"center",color:T.teal700,fontSize:68,lineHeight:1.6,fontWeight:600,letterSpacing:"0.05em",padding:"0 80px"}}>
         {lines.map((l,i) => (
           <div key={i} style={{display:"flex",justifyContent:"center",alignItems:"center",gap:12}}>
             {(i===0||i===lines.length-1) && <Sparkle size={48}/>}
@@ -364,28 +293,7 @@ function T_HeroPhoto({ lines=["每一次真實的對話","都是一次相遇"], 
     <div style={{position:"relative",width:1040,height:1040,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",inset:0,backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
       <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(15,31,56,0.82) 40%,rgba(15,31,56,0.2) 100%)"}}/>
-      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
-        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
-        padding:"60px 90px",textAlign:"center",
-        transform:`translateY(${verticalOffset}px)`,
-        color:"white",fontSize:62,fontWeight:600,lineHeight:1.5,letterSpacing:"0.04em"}}>
-        {lines.map((l,i) => <div key={i}>{l}</div>)}
-      </div>
-      <div style={{position:"absolute",bottom:80,left:"50%",transform:"translateX(-50%)"}}>
-        <Logo size={70} white/>
-      </div>
-    </div>
-  );
-}
-  const imgSrc = photo || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80";
-  return (
-    <div style={{position:"relative",width:1040,height:1040,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
-      <div style={{position:"absolute",inset:0,backgroundImage:`url(${imgSrc})`,backgroundSize:"cover",backgroundPosition:"center"}}/>
-      <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(15,31,56,0.82) 40%,rgba(15,31,56,0.2) 100%)"}}/>
-      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,
-        display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",
-        padding:"60px 90px",textAlign:"center",
-        color:"white",fontSize:62,fontWeight:600,lineHeight:1.5,letterSpacing:"0.04em"}}>
+      <div style={{position:"absolute",top:0,left:0,right:0,bottom:0,display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center",padding:"60px 90px",textAlign:"center",transform:`translateY(${verticalOffset}px)`,color:"white",fontSize:62,fontWeight:600,lineHeight:1.5,letterSpacing:"0.04em"}}>
         {lines.map((l,i) => <div key={i}>{l}</div>)}
       </div>
       <div style={{position:"absolute",bottom:80,left:"50%",transform:"translateX(-50%)"}}>
@@ -400,12 +308,10 @@ function T_EventDark({ title="教練倫理守則與規範", kicker="教練公益
     <div style={{position:"relative",width:1200,height:628,background:T.navy900,overflow:"hidden",fontFamily:"'Noto Serif TC','PingFang TC','Microsoft JhengHei',serif"}}>
       <div style={{position:"absolute",top:-60,left:-60}}><WCBlob color="blue" size={280} seed={1} opacity={0.12}/></div>
       <div style={{position:"absolute",bottom:-80,right:280}}><WCBlob color="sky" size={340} seed={3} opacity={0.10}/></div>
-      <div style={{position:"absolute",top:0,right:0,width:360,height:"100%",
-        background:`linear-gradient(135deg,${T.teal900},${T.navy700})`,opacity:0.7}}/>
+      <div style={{position:"absolute",top:0,right:0,width:360,height:"100%",background:`linear-gradient(135deg,${T.teal900},${T.navy700})`,opacity:0.7}}/>
       <div style={{position:"absolute",top:54,left:70}}><Logo size={60} white/></div>
       <div style={{position:"absolute",top:"50%",left:70,transform:"translateY(-50%)"}}>
-        <div style={{fontFamily:"'Cormorant Garamond','Georgia',serif",fontSize:14,letterSpacing:"0.32em",
-          color:T.teal300,textTransform:"uppercase",marginBottom:16}}>{kicker}</div>
+        <div style={{fontFamily:"'Cormorant Garamond','Georgia',serif",fontSize:14,letterSpacing:"0.32em",color:T.teal300,textTransform:"uppercase",marginBottom:16}}>{kicker}</div>
         <div style={{fontSize:54,fontWeight:600,color:"white",lineHeight:1.3,maxWidth:640,letterSpacing:"0.02em"}}>{title}</div>
       </div>
       <div style={{position:"absolute",right:60,top:"50%",transform:"translateY(-50%)",textAlign:"center",color:"white"}}>
@@ -415,7 +321,6 @@ function T_EventDark({ title="教練倫理守則與規範", kicker="教練公益
     </div>
   );
 }
-
 // ─── TEMPLATES CONFIG ─────────────────────────────────────────────────────────
 const TEMPLATES = [
   { id:"wc-quote",    label:"水彩語錄", labelEn:"Watercolor Quote", Comp:T_WatercolorQuote, w:1040,h:1040, hasPal:true             },
